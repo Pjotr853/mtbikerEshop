@@ -3,4 +3,10 @@
 3. Prepojenie a zobrazenie databazy v index.php, vyuzijem kod zo stareho zadania
 4. Data z databazy sa mi zobrazuju na webe
 5. Presunutie zadania na Github a pushnutie kodu
-
+6. podla zadania potrebujem input do ktoreho zadam ID a predpokladam ze je potrebny aj button na potvrdenie
+    -vytvoril som form, input a tlacidlo, nastavil form na post poziadavku
+    -vytvoril som pole kosik kde sa mi budu ukladat id po stlaceni tlacidla a vypisujem ich v elemetne ul cez foreach
+7. teraz mam samostatne prepojenu databazu s webom kde sa mi vypisuju data a samostatne urobene pridavanie prvkov do kosika a teraz
+    ich potrebujem spojit dokopy
+    - na phpadmin si preletim ci product_id zodpoveda category_id v potencionalne vsetkych zaznamov a vyzera ze ano
+    - urobim kontrolu ci produkt zadany do pola existuje v databaze 
