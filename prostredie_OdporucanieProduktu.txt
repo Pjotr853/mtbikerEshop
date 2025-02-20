@@ -10,3 +10,9 @@
     ich potrebujem spojit dokopy
     - na phpadmin si preletim ci product_id zodpoveda category_id v potencionalne vsetkych zaznamov a vyzera ze ano
     - urobim kontrolu ci produkt zadany do pola existuje v databaze 
+    - vytvorim si pole kosik a do neho budem ukladat produkty
+    - pridam pocitanie produktov, vytvoril som si druhy script kosik2 a v nom prechazam kosik a hladam zhody, chcel som to urobit v jednom
+    scripte ale nepodarilo sa 
+
+
+8. odporucany produkt chcem urobit tak ze z pola kde je najviac produktov vezmem kategoriu a z tej kategorie vyhladam produkt

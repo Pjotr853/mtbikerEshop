@@ -58,6 +58,7 @@
         $result = $conn->query($sql);
 
         
+        
 
         if ($result->num_rows == 1) {
             
@@ -72,24 +73,24 @@
             
             $found = false;
             // Prechádzame produkty v košíku a ak už existuje, zvyšujeme množstvo
-            foreach ($_SESSION['kosik'] as &$item) {
+           /* foreach ($_SESSION['kosik'] as &$item) {
                 if ($item['product_id'] == $product_id) {
                     $item['quantity'] += 1; 
                     $found = true;
                     echo "<p>foreach</p>";
                     break;
                 }
-            }
+            }*/
             
             // Ak produkt neexistuje v košíku, pridáme ho
-            if ($found ==false) {
-                echo "<p>nenasiel sa</p>";
+           // if ($found ==false) {
+              //  echo "<p>nenasiel sa</p>";
                 $_SESSION['kosik'][] = [
                     'product_id' => $product_id,
                     'category_id' => $product['category_id'],
                     'quantity' => 1, 
                 ];
-            }
+           // }
         }
             
             echo "<p>Produkt ID: $product_id, Kategória: {$product['category_id']} bol pridaný do košíka.</p>";
@@ -110,16 +111,45 @@
 
 
 <ul>
-    <?php
-    /***************************************vzpis kosiku************************************** */
-    if (!empty($_SESSION['kosik'])) { // Ak košík nie je prázdny, vypíšeme jeho obsah
-        foreach ($_SESSION['kosik'] as $item) {
-            echo "<li>Produkt ID: {$item['product_id']}, Kategória: {$item['category_id']}, Počet: {$item['quantity']}</li>";
+<?php
+//session_start();
+
+// Inicializácia $kosik2
+$kosik2 = [];
+
+// Skontrolujeme, či existuje $_SESSION['kosik']
+if (isset($_SESSION['kosik']) && !empty($_SESSION['kosik'])) {
+    foreach ($_SESSION['kosik'] as $item) {
+        $product_id = $item['product_id'];
+
+        // Ak už produkt existuje v $kosik2, zvýšime jeho quantity
+        if (isset($kosik2[$product_id])) {
+            $kosik2[$product_id]['quantity'] += 1;
+        } else {
+            // Ak produkt ešte nie je v $kosik2, pridáme ho
+            $kosik2[$product_id] = [
+                'product_id' => $product_id,
+                'category_id' => $item['category_id'],
+                'quantity' => 1
+            ];
         }
-    } else {
-        echo "<p>Košík je prázdny.</p>";
     }
-    ?>
+}
+
+// Uloženie spracovaného košíka do session
+$_SESSION['kosik2'] = $kosik2;
+
+// Výpis obsahu košíka
+if (!empty($kosik2)) {
+    echo "<ul>";
+    foreach ($kosik2 as $item) {
+        echo "<li>Produkt ID: {$item['product_id']}, Kategória: {$item['category_id']}, Počet: {$item['quantity']}</li>";
+    }
+    echo "</ul>";
+} else {
+    echo "<p>Košík je prázdny.</p>";
+}
+?>
 </ul>
 
 
