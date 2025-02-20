@@ -2,4 +2,5 @@
 2. Kontrola databazy MySQL na http://localhost/phpmyadmin/. Vidim ze je stale tam a da sa pouzit
 3. Prepojenie a zobrazenie databazy v index.php, vyuzijem kod zo stareho zadania
 4. Data z databazy sa mi zobrazuju na webe
-5. Presunutie zadania na Github
+5. Presunutie zadania na Github a pushnutie kodu
+
