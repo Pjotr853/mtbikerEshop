@@ -12,7 +12,58 @@
     - urobim kontrolu ci produkt zadany do pola existuje v databaze 
     - vytvorim si pole kosik a do neho budem ukladat produkty
     - pridam pocitanie produktov, vytvoril som si druhy script kosik2 a v nom prechazam kosik a hladam zhody, chcel som to urobit v jednom
-    scripte ale nepodarilo sa 
+    poli ale nepodarilo sa 
 
 
-8. odporucany produkt chcem urobit tak ze z pola kde je najviac produktov vezmem kategoriu a z tej kategorie vyhladam produkt
+8. odporucany produkt chcem urobit tak ze z pola vyberiem produkt ktory si zakaznik zvolil najviac kusov, 
+    ak je rovnaky pocet kusov zoberiem prvy produkt z pola pretoze prvy produkt ma pravdepodobne najvacsiu hodnotu
+    pre zakaznika a kedze sa nejedna o kamennu predajnu ale eshop tak je velka pravdepodobnost ze tento produkt bude na prvom mieste,
+    a menej vyzadovane produkty na poslednych prieckach
+    - z vybraneho produktu si zoberiem kategoriu a snou budem pracovat
+    - napisem select v ktorom spocitam pocet objednavok
+    SELECT product_id, COUNT( *) as pocet, category_id FROM order_products_data GROUP BY product_id  
+    ORDER BY `order_products_data`.`product_id` ASC
+   
+   
+    -potom potrebujem select ktory mi najde  iba produkty z pozadovanej kategorie
+    SELECT product_id, COUNT(*) AS pocet, category_id
+    FROM order_products_data
+    WHERE category_id = 84
+    GROUP BY product_id, category_id;
+    -84 bude premenna
+    - potrebujem select ktory mi vyberie prvok kotry ma najvacsi pocet COUNT
+    SELECT product_id, COUNT(*) AS pocet, category_id
+    FROM order_products_data
+    WHERE category_id = 84
+    GROUP BY product_id, category_id
+    ORDER BY pocet DESC
+    LIMIT 1;
+
+    -tu by sa dalo uvazovat aj o cene pretoze zakzanik si skor kupi nieco pod napriklad 10 eur ako nieco okolo 100 eur
+    pokusim sa to pridat, predpokladam ze price mi robi priemernu hodnou produktov,
+    -potrebujem vyuzit 2 selecty pretoze ak nebude cena pod 10 neodporucim nic a druhy select zoradim podla ceny od najlacnejsieho a 
+    vyberiem najlacnejsi
+    SELECT *
+    FROM (
+        SELECT product_id, COUNT(*) AS pocet, category_id, price
+        FROM order_products_data
+        WHERE category_id = 84 AND price < 10
+        GROUP BY product_id, category_id, price
+        ORDER BY pocet DESC
+        LIMIT 1
+    ) AS pod20
+
+    UNION ALL
+
+    SELECT *
+    FROM (
+        SELECT product_id, COUNT(*) AS pocet, category_id, price
+        FROM order_products_data
+        WHERE category_id = 84 AND price >= 10
+        GROUP BY product_id, category_id, price
+        ORDER BY price ASC, pocet DESC
+        LIMIT 1
+    ) AS nad20
+    LIMIT 1;
+
+
