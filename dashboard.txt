@@ -58,5 +58,27 @@
     SUM(price * quantity) / COUNT(DISTINCT order_id) AS priemerna_hodnota
     FROM order_products_data 
     GROUP BY mesiac;
-    -mozno by bolo yaujimave aj pocet objednavok z mesiac
-6.
+    -mozno by bolo zaujimave aj pocet objednavok z mesiac
+6. pomer revenue od first time buyers vs returning customers po mesiacoch
+    cize mam porovnat zakaznikov ktori nakupili len raz a zakaznikov ktori nakupuju viac krat
+    nasledne mam spocitat v kazdom mesiaci a porovnat trzby prvokupcov a stalejsich zakaznikov
+    -potrebujem 2 selecty, pre stalych a pre opakujucich sa zakaznikov 
+    -potrebujem zistit pocty prvokupujucich, vyuzijem GROUP by a nasledne si ponecham len takych ktorych order id sa ukazalo len raz
+    -nasledne k tomu potrebujem  spocitat po mesiaci cize zase group by mesiac ale iba tych ktory sa vyskytli v predchadzajucom group by 
+    iba raz, to bz sa dalo urobit cez 2 selecty 
+
+    SELECT 
+        DATE_FORMAT(FROM_UNIXTIME(time), '%Y-%m') AS mesiac,
+        COUNT(DISTINCT user_id) AS pocet_first_time_buyers,
+        SUM(price * quantity) AS celkove_trzby_first_time
+    FROM order_products_data
+    WHERE user_id IN (
+        SELECT user_id
+        FROM order_products_data
+        GROUP BY user_id
+        HAVING COUNT(DISTINCT order_id) = 1
+    )
+    GROUP BY mesiac;
+
+    -analogicky pristupujem ako k returning customer iba zmenim riadok HAVING COUNT(DISTINCT order_id) > 1
+    -script js a php su analogicke ako v celej ulohe

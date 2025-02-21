@@ -7,6 +7,7 @@
         <a href="./view/trzby.php">Trzby</a>
         <a href="./view/peakHours.php">Peak hours</a>
         <a href="./view/avarageOrder.php">Avarage Order</a>
+        <a href="./view/firstVsReturn.php">First VS Return </a>
     </nav>
 
     <h1>Vitaj v e-shope MTBiker!</h1>

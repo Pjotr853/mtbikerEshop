@@ -12,6 +12,7 @@
         <a href="./trzby.php">Trzby</a>
         <a href="./peakHours.php">Peak hours</a>
         <a href="./avarageOrder.php">Avarage Order</a>
+        <a href="./firstVsReturn.php">First VS Return </a>
     </nav>
     <h1>Dashboard</h1>
     
