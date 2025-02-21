@@ -1,0 +1,20 @@
+Tato uloha je velmi zaujimava
+a nemyslím si ze jeden sql dopyt bude stacit ale bude potrebne k nej podrobnejsie analyzovat kategorie a produkty
+
+postupoval by som nasledovne:
+vypisal by som si po  10 najpredavanejsich produktov, kategorii a produktov ktore najviac vynasaju.
+V databaze su december, januar a februar 2x ale v inom roku, porovnal by som ich ako sa menia zaujmy
+zakaznikov.
+
+Tak isto by som vyzualizoval aj rocne obdobia pretoze predpokaldam ze bicykle sa na jesen nebudu tak predavat ako na jar 
+obdobne predpokladam ze niektore produkty budu viac predajne v urcite tyzdne ako napriklad sviatky, ukoncenie skoly vrámci 
+daru o niečo viac ako bežne dni. 
+
+
+K vizualizacii by som pravdepodobne vyuzil viac ako jeden graf, pretože z mojho pohladu neexistuje jeden graf so správynm riešením
+    1. Prvý graf by som vyuzil na vizualizaciu najpredávanejšich produktov napriklad 3 za každý mesiac
+    2. Obdobne by som to urobil pri kategoriach
+    3. Urobil by som aj grafy k vianociam a koncu školskeho roku pre produkty a kategorie
+    4. Okrem produktov by som vyzualizoval aj produkty ktore najviac zarabajú, pretože možme predať za mesiac 20 bicyklov a 100 
+        náhradných duší prípadne 50 pláštou ale predpokladám že najväčší výnos budu mat bicykle aj ked je ich menej 
+  
