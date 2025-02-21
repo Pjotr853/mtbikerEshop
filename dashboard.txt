@@ -15,3 +15,40 @@
     -idem vyzualizovat 
     -tieto data by som zvolil bud ciarovy alebo stlpcovy graf, vyber padol na ciarovy
     -nasledne js script na kreslenie grafu spojim s datami z php
+4.  okej teraz idem hladat rusne hodiny,
+    vytvorim si peakHours.php, pridam href na preklikavaie medzi subormi 
+    - potrebujem sql dopyt 
+    -mam cas ako UNIX timestamp, FROM_UNIXTIME(time) konvertujem cas na zrozumitelny,
+    DAYOFWEEK() je nejaka funkcia co by mala vraciat mesiace ako cislo od 1 po 7 kde 1 je nedela,
+    HOUR je funkcia ktora vracia cislo od 0 po 23
+    -okej mame casy teraz ich podtrebujeme spocitat a roydelit na hodiny a dni za tyzden,
+    na to by sa dalo vyuzit count a group by 
+    -vysledny select
+    SELECT 
+    DAYOFWEEK(FROM_UNIXTIME(time)) AS den, 
+    HOUR(FROM_UNIXTIME(time)) AS hodina,
+    COUNT(*) AS pocet_objednavok
+    FROM order_products_data
+    GROUP BY den, hodina;
+    -graf zobrazim obdobne ako v predoslej ulohe,
+    -vidim ze viem odcitat hodnoty ale nie som spokojny urobim dalsie 2 grafi pre pocet objednavok pre kazdy den a pocet objednavo 
+    po hodinach
+    -spocitam teraz pre kazdu hodinu v tyzdni samostatne
+    -upravim dopyt
+    SELECT 
+    HOUR(FROM_UNIXTIME(time)) AS hodina,
+    COUNT(*) AS pocet_objednavok
+    FROM order_products_data
+    GROUP BY hodina;
+    -a vykreslim graf
+    -obdobne postupujem aj pre dni v tyzdni
+    -upravim dopyt SELECT 
+        DAYOFWEEK(FROM_UNIXTIME(time)) AS den_tyzden, 
+        COUNT(*) AS pocet_objednavok
+        FROM order_products_data
+        GROUP BY den_tyzden
+        ORDER BY den_tyzden
+        a analogicky idem vykreslobvat
+    -*teraz mam 3 grafy, pre kazdu hodinuu v tyzdni, den v tyzdni a kombinovane
+5.
+        
