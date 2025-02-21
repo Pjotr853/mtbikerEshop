@@ -4,7 +4,7 @@
 
     <nav>
         <a href="./index.php">Domov</a>
-        <a href="./view/shop.php">Obchod</a>
+        <a href="./view/dashboard.php">Dashboard</a>
         <a href="/product/1">Produkt 1</a>
         <a href="/product/2">Produkt 2</a>
     </nav>
@@ -29,7 +29,14 @@
     /*if (!isset($_SESSION['kosik'])) { //kontroluje, či už existuje pole kosik
         $_SESSION['kosik'] = [];      //ak nie vztvori pole kosik
     }
-*/  $zmena=false;
+*/  
+    // Vymazanie celého košíka
+    if (isset($_POST['clear_cart'])) {
+        
+        unset($_SESSION['kosik']);
+        echo "<p>Košík bol vyprázdnený.</p>";
+    }
+    $zmena=false;
     if ($_SERVER["REQUEST_METHOD"] == "POST") { //spracovanie post poziadavky z formulara
         if (!empty($_POST['product_id']) && is_numeric($_POST['product_id'])) { //kontrolujem ci kosik je prazdny a ma ciselny vstup
             $product_id = intval($_POST['product_id']); //beriem vstup pola s id product_id a konvert na cele cislo 
@@ -108,7 +115,9 @@
     ?>
 </ul>
 
-
+<form method="POST">
+    <button type="submit" name="clear_cart">Vyprázdniť košík</button>
+</form>
 
 <ul>
 <?php
@@ -166,8 +175,87 @@ if (!empty($kosik2)) {
         echo "<li>Najziadanejsi produkt: {$max_product['product_id']}, Kategória: {$max_product['category_id']}, Počet: {$max_product['quantity']}</li>";
     }
 }
+
+
+
+// Skontrolujeme, či bolo stlačené tlačidlo "Objednať"
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['order'])) {
+    // Zistenie najžiadanejšieho produktu z košíka
+    $max_quantity = 0;
+    $max_product = null;
+
+    foreach ($kosik2 as $item) {
+        if ($item['quantity'] > $max_quantity) {
+            $max_quantity = $item['quantity'];
+            $max_product = $item;
+        }
+    }
+
+    if ($max_product) {
+        // Získanie kategórie najžiadanejšieho produktu z košíka
+        $category_id = $max_product['category_id'];
+
+        // Pripojenie k databáze
+        $host = 'localhost';
+        $user = 'root';
+        $password = '';
+        $dbname = 'mtbiker';
+        $conn = new mysqli($host, $user, $password, $dbname);
+
+        
+        if ($conn->connect_error) {
+            die("Spojenie s databázou zlyhalo: " . $conn->connect_error);
+        }
+
+        // dotaz na získanie najpredávanejšieho produktu 
+        $sql = "SELECT * 
+                FROM (
+                    SELECT product_id, COUNT(*) AS pocet, category_id, price
+                    FROM order_products_data
+                    WHERE category_id = $category_id AND price < 10 
+                    GROUP BY product_id, category_id, price
+                    ORDER BY pocet DESC
+                    LIMIT 1
+                ) AS pod10
+
+                UNION ALL
+
+                SELECT * 
+                FROM (
+                    SELECT product_id, COUNT(*) AS pocet, category_id, price
+                    FROM order_products_data
+                    WHERE category_id = $category_id AND price >= 10 
+                    GROUP BY product_id, category_id, price
+                    ORDER BY price ASC, pocet DESC
+                    LIMIT 1
+                ) AS nad10
+                LIMIT 1";
+
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            // Zobrazenie odporúčaného produktu
+            while ($row = $result->fetch_assoc()) {
+                echo "<p>Odporúčaný produkt z kategórie {$category_id}:</p>";
+                echo "<ul>";
+                echo "<li>Produkt ID: {$row['product_id']}, Kategória: {$row['category_id']}, Cena: {$row['price']}, Počet predajov: {$row['pocet']}</li>";
+                echo "</ul>";
+            }
+        } else {
+            echo "<p>Žiadne produkty sa nenašli v danej kategórii.</p>";
+        }
+
+        // Zatvorenie pripojenia k databáze
+        $conn->close();
+    }
+}
+
+
 ?>
 </ul>
+<form method="POST">
+    <button type="submit" name="order">Objednať</button>
+</form>
 
 
 </body>

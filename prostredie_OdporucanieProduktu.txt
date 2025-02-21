@@ -51,7 +51,7 @@
         GROUP BY product_id, category_id, price
         ORDER BY pocet DESC
         LIMIT 1
-    ) AS pod20
+    ) AS pod10
 
     UNION ALL
 
@@ -63,7 +63,20 @@
         GROUP BY product_id, category_id, price
         ORDER BY price ASC, pocet DESC
         LIMIT 1
-    ) AS nad20
+    ) AS nad10
     LIMIT 1;
+
+
+    -upravim sql dotaz aby category_id = 84 bolo dynaicky menene WHERE category_id = $category_id AND price >= 10
+    -na zaver som dopisal kod spojil najziadanejsi produkt v kosiku s sql v predchadzajucom kroku
+
+Scenár
+1.1  zakaznik zada do inputu cislo objednavky a stlaci pridaj 
+    1.1.1 ak zada zle id nic sa neprida
+    1.1.2 ak zada spravne prida sa
+1.2 zakaznik pridava produkty
+1.3 zakaznik zvoli objednat
+1.4 vypise sa odporucany produkt    
+
 
 
