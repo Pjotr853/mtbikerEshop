@@ -1,0 +1,17 @@
+1. zacnem klasicky pripojim sa na databazu a zobrazi prvych 10 zaznamov
+2. idem vyzualizovat data, potrebujem graf, vyuzijem na kreslenie grafu javascript new Chart
+3. bod 1. trzby po mesiacoch
+    -kedze si pamatam ze som si trzby pozeral minule zadanie tak zaznamy boli na urovni priblizne 20 mesiacov
+    -napisem sql dopyt 
+    SELECT 
+    DATE_FORMAT(FROM_UNIXTIME(time), '%Y-%m') AS month, 
+    SUM(price * quantity) AS total_sales 
+    FROM order_products_data 
+    GROUP BY month ORDER BY month;
+    -zmenil som datum na mne zrozumitelny a spocital kvantitu krat cenu produktu
+    zoskupil som ich podla mesiacov
+    -vidim 15 zaznamov 
+    -tieto zaznamy mi hovoria o trzbach v danych mesiacoch
+    -idem vyzualizovat 
+    -tieto data by som zvolil bud ciarovy alebo stlpcovy graf, vyber padol na ciarovy
+    -nasledne js script na kreslenie grafu spojim s datami z php

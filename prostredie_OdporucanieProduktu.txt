@@ -79,4 +79,4 @@ Scenár
 1.4 vypise sa odporucany produkt    
 
 
-
+poznamka: pri pisani kódu som si pomahal s chatGPT kedze syntax php nepoznam 
