@@ -50,5 +50,13 @@
         ORDER BY den_tyzden
         a analogicky idem vykreslobvat
     -*teraz mam 3 grafy, pre kazdu hodinuu v tyzdni, den v tyzdni a kombinovane
-5.
-        
+5.  average order value po mesiacoch 
+    -uloha je podobna ako predosle 
+    potrebujem sql dopyt pre priemerny zarobok v mesiaci, potrebujem SUM(price* quantity) a deleno count(DISTINCT order_id),
+    musim dat DISTINCT lebo mam id viac krat rovnake 
+    -SELECT DATE_FORMAT(FROM_UNIXTIME(time), '%Y-%m') AS mesiac, 
+    SUM(price * quantity) / COUNT(DISTINCT order_id) AS priemerna_hodnota
+    FROM order_products_data 
+    GROUP BY mesiac;
+    -mozno by bolo yaujimave aj pocet objednavok z mesiac
+6.

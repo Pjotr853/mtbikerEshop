@@ -11,7 +11,7 @@
         <a href=".././index.php">Domov</a>
         <a href="./trzby.php">Trzby</a>
         <a href="./peakHours.php">Peak hours</a>
-        <a href="./product/2">Produkt 2</a>
+        <a href="./avarageOrder.php">Avarage Order</a>
     </nav>
     <h1>Dashboard</h1>
     

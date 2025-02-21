@@ -6,7 +6,7 @@
         <a href="./index.php">Domov</a>
         <a href="./view/trzby.php">Trzby</a>
         <a href="./view/peakHours.php">Peak hours</a>
-        <a href="/view/2">Produkt 2</a>
+        <a href="./view/avarageOrder.php">Avarage Order</a>
     </nav>
 
     <h1>Vitaj v e-shope MTBiker!</h1>
